@@ -412,15 +412,26 @@ const AnimeAPI = {
   getLatestEpisodes: () => {
     const episodes = [];
     ANIME_DATA.forEach(anime => {
-      const latestEps = anime.episodes.slice(-3);
+      // Get the last 2 aired episodes for each anime to simulate "latest"
+      const latestEps = anime.episodes.slice(-2);
       latestEps.forEach(ep => {
-        episodes.push({ ...ep, anime });
+        episodes.push({
+          ...ep,
+          anime: {
+            id: anime.id,
+            title: anime.title,
+            poster: anime.poster
+          }
+        });
       });
     });
-    return episodes.sort((a, b) => b.anime.id - a.anime.id).slice(0, 12);
+    // Randomize slightly and take top 12
+    return episodes.sort(() => Math.random() - 0.5).slice(0, 12);
   },
 
   getByGenre: (genre) => ANIME_DATA.filter(a => a.genres.includes(genre)),
+
+  getByYear: (year) => ANIME_DATA.filter(a => a.year === parseInt(year)),
 
   search: (query) => {
     const q = query.toLowerCase();
