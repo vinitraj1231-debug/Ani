@@ -16,13 +16,13 @@ const Views = {
 
     return `
       <div class="home-view">
-        ${this.heroCarousel(featured)}
-        ${continueWatching.length > 0 ? this.section('Continue Watching', continueWatching.map(c => Components.continueCard(c)).join('')) : ''}
-        ${this.section('Trending Now', trending.map(a => Components.animeCard(a, 'md')).join(''), '#/trending')}
-        ${this.genresSection()}
-        ${this.section('Latest Episodes', latestEps.slice(0, 8).map(ep => this.latestEpisodeCard(ep)).join(''))}
-        ${this.section('Popular Anime', popular.map(a => Components.animeCard(a, 'md')).join(''), '#/explore')}
-        ${recentlyViewed.length > 0 ? this.section('Recently Viewed', recentlyViewed.map(a => Components.animeCard(a, 'sm')).join('')) : ''}
+        ${Views.heroCarousel(featured)}
+        ${continueWatching.length > 0 ? Views.section('Continue Watching', continueWatching.map(c => Components.continueCard(c)).join('')) : ''}
+        ${Views.section('Trending Now', trending.map(a => Components.animeCard(a, 'md')).join(''), '#/trending')}
+        ${Views.genresSection()}
+        ${Views.section('Latest Episodes', latestEps.slice(0, 8).map(ep => Views.latestEpisodeCard(ep)).join(''))}
+        ${Views.section('Popular Anime', popular.map(a => Components.animeCard(a, 'md')).join(''), '#/explore')}
+        ${recentlyViewed.length > 0 ? Views.section('Recently Viewed', recentlyViewed.map(a => Components.animeCard(a, 'sm')).join('')) : ''}
       </div>
     `;
   },
@@ -512,9 +512,13 @@ const Views = {
         <div class="watch-layout">
           <div>
             <div class="player-container">
-              <div class="player-placeholder">
-                <div class="play-button-large" onclick="Toast.show('Video player would load here','info')">
+              <div class="player-placeholder" id="video-player">
+                <img src="${episode.thumbnail}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.4;filter:blur(4px);" />
+                <div class="play-button-large" onclick="Views.startPlayback()">
                   <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 3l14 9-14 9V3z"/></svg>
+                </div>
+                <div class="player-overlay-info">
+                  <h3>Now Playing: Ep ${episode.number} — ${episode.title}</h3>
                 </div>
               </div>
             </div>
@@ -589,6 +593,28 @@ const Views = {
   // ==========================================
   // 404
   // ==========================================
+  startPlayback() {
+    const player = document.getElementById('video-player');
+    player.innerHTML = `
+      <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;">
+        <div class="loader"></div>
+        <p style="font-size:0.9rem;color:var(--text-secondary);animation:pulse 1.5s infinite;">Connecting to secure stream...</p>
+      </div>
+    `;
+
+    setTimeout(() => {
+      player.innerHTML = `
+        <div style="width:100%;height:100%;position:relative;">
+          <img src="https://picsum.photos/seed/streaming/800/450" style="width:100%;height:100%;object-fit:cover;" />
+          <div class="playback-ui">
+             <div class="live-badge">LIVE</div>
+          </div>
+        </div>
+      `;
+      Toast.show('Stream started successfully', 'success');
+    }, 2000);
+  },
+
   notFound() {
     return `
       <div class="view-enter" style="text-align:center;padding:80px 20px;">
