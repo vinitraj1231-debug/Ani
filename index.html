@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#08080c" />
+  <title>AniVerse — Premium Anime Streaming</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+</head>
+<body>
+  <!-- Onboarding overlay for first-time users -->
+  <div id="onboarding" class="onboarding-overlay" hidden>
+    <div class="onboarding-card glass">
+      <div class="onboarding-logo">
+        <span class="logo-text">Anime<span class="accent"Hub</span></span>
+      </div>
+      <h2>Welcome to the future of anime</h2>
+      <p>Stream thousands of episodes in stunning quality. Save your favorites, download for offline, and never miss a release.</p>
+      <div class="onboarding-features">
+        <div class="onboarding-feature">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3l14 9-14 9V3z"/></svg>
+          <span>Instant Streaming</span>
+        </div>
+        <div class="onboarding-feature">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          <span>Offline Downloads</span>
+        </div>
+        <div class="onboarding-feature">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+          <span>Save & Watchlist</span>
+        </div>
+      </div>
+      <button class="btn-primary btn-lg btn-block" onclick="App.dismissOnboarding()">Get Started</button>
+    </div>
+  </div>
+
+  <!-- Sticky Header -->
+  <header id="app-header" class="app-header glass">
+    <div class="header-left">
+      <a href="#/" class="header-logo">
+        <span class="logo-text">Ani<span class="accent">Verse</span></span>
+      </a>
+    </div>
+    <div class="header-center">
+      <div class="search-bar">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input type="text" id="global-search" placeholder="Search anime, episodes..." autocomplete="off" />
+        <div id="search-suggestions" class="search-suggestions glass" hidden></div>
+      </div>
+    </div>
+    <div class="header-right">
+      <button class="icon-btn" onclick="App.toggleNotifications()" aria-label="Notifications">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/></svg>
+        <span class="badge">3</span>
+      </button>
+      <button class="icon-btn" onclick="App.toggleTheme()" aria-label="Toggle theme" id="theme-toggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      </button>
+      <a href="#/profile" class="header-avatar" aria-label="Profile">
+        <div class="avatar-circle">R</div>
+      </a>
+    </div>
+  </header>
+
+  <!-- Notification Panel -->
+  <div id="notification-panel" class="notification-panel glass" hidden>
+    <div class="notification-header">
+      <h3>Notifications</h3>
+      <button class="text-btn" onclick="App.clearNotifications()">Clear all</button>
+    </div>
+    <div class="notification-list" id="notification-list"></div>
+  </div>
+
+  <!-- Main Content -->
+  <main id="view" class="app-main">
+    <!-- Views rendered here by router -->
+    <div class="skeleton-screen" id="initial-loader">
+      <div class="skeleton-hero"></div>
+      <div class="skeleton-row"></div>
+      <div class="skeleton-row"></div>
+    </div>
+  </main>
+
+  <!-- Bottom Navigation (Fixed) -->
+  <nav class="bottom-nav glass">
+    <a href="#/" class="nav-item active" data-route="/">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></svg>
+      <span>Home</span>
+    </a>
+    <a href="#/explore" class="nav-item" data-route="/explore">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <span>Explore</span>
+    </a>
+    <a href="#/trending" class="nav-item" data-route="/trending">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></svg>
+      <span>Trending</span>
+    </a>
+    <a href="#/saved" class="nav-item" data-route="/saved">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+      <span>Saved</span>
+    </a>
+    <a href="#/downloads" class="nav-item" data-route="/downloads">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+      <span>Downloads</span>
+    </a>
+    <a href="#/profile" class="nav-item" data-route="/profile">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span>Profile</span>
+    </a>
+  </nav>
+
+  <!-- Floating Action Button -->
+  <button class="fab" id="fab" onclick="App.scrollToTop()" aria-label="Scroll to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+
+  <!-- Toast container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/router.js"></script>
+  <script src="js/views.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
