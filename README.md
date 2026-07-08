@@ -32,7 +32,7 @@ A production-ready, app-like anime streaming frontend with advanced admin panel,
 - **Fully responsive** (mobile, tablet, desktop)
 
 ### Admin Panel
-- **Secure login** with credentials: `rajpapa` / `28@RajPapa`
+- **Secure login** with credentials: `papa` / `papa`
 - **IP-based brute force protection** — 3 failed attempts → 24h block
 - **Dashboard** with stats and charts
 - **Anime management** (CRUD operations)
