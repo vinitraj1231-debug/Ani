@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard — AniVerse</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/admin.css" />
+</head>
+<body>
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar" id="admin-sidebar">
+      <div class="sidebar-logo">
+        <h2>Ani<span>Verse</span></h2>
+        <p>Admin Panel</p>
+      </div>
+
+      <div class="sidebar-section-title">Main</div>
+      <nav class="sidebar-nav">
+        <a class="sidebar-nav-item active" data-section="dashboard" onclick="AdminPanel.showSection('dashboard')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Dashboard
+        </a>
+        <a class="sidebar-nav-item" data-section="anime" onclick="AdminPanel.showSection('anime')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h20v14H2z"/><path d="M8 21h8M12 17v4"/></svg>
+          Anime Management
+        </a>
+        <a class="sidebar-nav-item" data-section="episodes" onclick="AdminPanel.showSection('episodes')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Episodes
+        </a>
+        <a class="sidebar-nav-item" data-section="users" onclick="AdminPanel.showSection('users')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+          Users
+        </a>
+      </nav>
+
+      <div class="sidebar-section-title">System</div>
+      <nav class="sidebar-nav">
+        <a class="sidebar-nav-item" data-section="analytics" onclick="AdminPanel.showSection('analytics')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></svg>
+          Analytics
+        </a>
+        <a class="sidebar-nav-item" data-section="security" onclick="AdminPanel.showSection('security')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+          Security & IP Blocks
+        </a>
+        <a class="sidebar-nav-item" data-section="settings" onclick="AdminPanel.showSection('settings')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24m7.08 7.08l4.24 4.24M1 12h6m6 0h6M4.22 19.78l4.24-4.24m7.08-7.08l4.24-4.24"/></svg>
+          Settings
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <div class="admin-topbar">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <button class="mobile-menu-toggle" onclick="document.getElementById('admin-sidebar').classList.toggle('open')">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+          </button>
+          <h1 id="page-title">Dashboard</h1>
+        </div>
+        <div class="admin-user">
+          <div class="admin-user-info" style="text-align:right;">
+            <h4>rajpapa</h4>
+            <p>Super Admin</p>
+          </div>
+          <div class="admin-user-avatar">R</div>
+          <button class="logout-btn" onclick="AdminAuth.logout()">Logout</button>
+        </div>
+      </div>
+
+      <div id="admin-content">
+        <!-- Content rendered by AdminPanel -->
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-card" id="modal-card">
+      <!-- Modal content injected here -->
+    </div>
+  </div>
+
+  <script src="../js/auth.js"></script>
+  <script src="../js/admin.js"></script>
+  <script>
+    // Check auth on load
+    AdminAuth.requireAuth();
+    AdminPanel.init();
+  </script>
+</body>
+</html>
